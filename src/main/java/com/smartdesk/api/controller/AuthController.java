@@ -1,6 +1,7 @@
 package com.smartdesk.api.controller;
 
 import com.smartdesk.api.DTOs.request.CriarUsuarioRequestDTO;
+import com.smartdesk.api.DTOs.request.LoginRequestDTO;
 import com.smartdesk.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,5 +23,10 @@ public class AuthController {
     public ResponseEntity<?> cadastrarUsuario(@RequestBody CriarUsuarioRequestDTO dto){
         authService.cadastrarUsuario(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUsuario(@RequestBody LoginRequestDTO dto){
+        return ResponseEntity.ok(authService.loginUsuario(dto));
     }
 }
