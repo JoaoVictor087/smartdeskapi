@@ -20,7 +20,7 @@ public class Reserva {
     @Column(name = "DT_FIM", nullable = false)
     private LocalDateTime dataFim;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
 
