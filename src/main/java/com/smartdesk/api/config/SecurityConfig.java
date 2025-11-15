@@ -1,5 +1,6 @@
 package com.smartdesk.api.config;
 
+import com.smartdesk.api.enums.ROLES;
 import com.smartdesk.api.repository.UsuarioRepository;
 import com.smartdesk.api.security.JWT.JWTFilter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig {
     private final JWTFilter jwtFilter;
     private final UsuarioRepository usuarioRepository;
@@ -41,6 +44,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/error"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.POST,"mesas").hasRole("ADMIN")
                         //.request matchers para role admin, criar mesa, etc.hasRoleAdmin
                         .anyRequest().authenticated()
                 )
