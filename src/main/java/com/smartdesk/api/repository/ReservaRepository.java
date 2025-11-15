@@ -17,4 +17,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             @Param("dataInicio") LocalDateTime dataInicio,
             @Param("dataFim") LocalDateTime dataFim
     );
+    @Query("SELECT DISTINCT r.mesa.id FROM Reserva r " +
+            "WHERE r.dataInicio < :dataFim AND r.dataFim > :dataInicio")
+    List<Long> findMesasOcupadas(
+            @Param("dataInicio") LocalDateTime dataInicio,
+            @Param("dataFim") LocalDateTime dataFim
+    );
 }
