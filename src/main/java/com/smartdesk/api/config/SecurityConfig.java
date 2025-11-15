@@ -45,6 +45,7 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST,"mesas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"reservas").hasRole("USER")
                         //.request matchers para role admin, criar mesa, etc.hasRoleAdmin
                         .anyRequest().authenticated()
                 )

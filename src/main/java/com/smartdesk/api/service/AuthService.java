@@ -56,7 +56,7 @@ public class AuthService {
         String refreshToken = jwtTokenProvider.gerarRefreshToken(usuario);
 
         log.debug("usuário {} logado com sucesso", usuario.getId());
-        return new LoginResponseDTO(accessToken, refreshToken, usuario.getId());
+        return new LoginResponseDTO(accessToken, refreshToken, usuario.getId(), usuario.getRole());
     }
 
 

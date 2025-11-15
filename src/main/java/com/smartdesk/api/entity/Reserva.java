@@ -1,13 +1,17 @@
 package com.smartdesk.api.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "T_SD_RESERVA")
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reserva {
     @Id
     @Column(name = "ID_RESERVA")
@@ -24,7 +28,7 @@ public class Reserva {
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ID_MESA", nullable = false)
     private Mesa mesa;
 }
