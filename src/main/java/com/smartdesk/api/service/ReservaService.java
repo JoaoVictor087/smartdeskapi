@@ -4,6 +4,7 @@ import com.smartdesk.api.DTOs.request.CriarReservaRequestDTO;
 import com.smartdesk.api.entity.Mesa;
 import com.smartdesk.api.entity.Reserva;
 import com.smartdesk.api.entity.Usuario;
+import com.smartdesk.api.enums.StatusMesa;
 import com.smartdesk.api.exceptions.ValidacaoException;
 import com.smartdesk.api.repository.MesaRepository;
 import com.smartdesk.api.repository.ReservaRepository;
@@ -60,5 +61,11 @@ public class ReservaService {
         if (inicio.isAfter(fim) || inicio.isEqual(fim)) {
             throw new ValidacaoException("A data de início deve ser anterior à data de fim.");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reserva> findReservasById() {
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return reservaRepository.findAllByUsuarioIdOrderByDataInicioDesc(usuarioLogado.getId());
     }
 }

@@ -53,4 +53,5 @@ public class MesaService {
     public List<Mesa> getMesasComStatusDisponivel() {
         return mesaRepository.findByStatusMesa(StatusMesa.DISPONIVEL);
     }
+
 }

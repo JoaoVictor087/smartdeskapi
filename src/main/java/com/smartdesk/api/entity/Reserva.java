@@ -1,5 +1,6 @@
 package com.smartdesk.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Reserva {
     @Column(name = "DT_FIM", nullable = false)
     private LocalDateTime dataFim;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;

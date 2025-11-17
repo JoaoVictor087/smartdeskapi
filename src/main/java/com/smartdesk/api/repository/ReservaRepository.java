@@ -23,4 +23,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             @Param("dataInicio") LocalDateTime dataInicio,
             @Param("dataFim") LocalDateTime dataFim
     );
+
+    List<Reserva> findAllByUsuarioIdOrderByDataInicioDesc(Long idUsuario);
 }

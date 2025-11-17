@@ -1,5 +1,6 @@
 package com.smartdesk.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smartdesk.api.enums.StatusMesa;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,7 @@ public class Mesa {
     @JoinColumn(name = "T_SD_SENSOR")
     private Sensor sensor;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario empresa;
