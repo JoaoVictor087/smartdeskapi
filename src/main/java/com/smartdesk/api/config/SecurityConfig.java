@@ -1,6 +1,5 @@
 package com.smartdesk.api.config;
 
-import com.smartdesk.api.enums.ROLES;
 import com.smartdesk.api.repository.UsuarioRepository;
 import com.smartdesk.api.security.JWT.JWTFilter;
 import lombok.RequiredArgsConstructor;
