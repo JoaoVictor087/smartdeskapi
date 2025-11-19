@@ -4,10 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class TratadorDeExcecao {
@@ -53,6 +55,23 @@ public class TratadorDeExcecao {
                 .body(new ErroResposta(
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         "Ocorreu um erro interno no servidor.",
+                        LocalDateTime.now()
+                ));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErroResposta> tratarErroValidacao(MethodArgumentNotValidException ex) {
+        String mensagens = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(erro -> erro.getField() + ": " + erro.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErroResposta(
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Erro de validação: " + mensagens,
                         LocalDateTime.now()
                 ));
     }

@@ -3,6 +3,7 @@ package com.smartdesk.api.controller;
 import com.smartdesk.api.DTOs.request.CriarMesaRequestDTO;
 import com.smartdesk.api.entity.Mesa;
 import com.smartdesk.api.service.MesaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class MesaController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> criarMesa(@RequestBody CriarMesaRequestDTO dto) {
+    public ResponseEntity<?> criarMesa(@RequestBody @Valid CriarMesaRequestDTO dto) {
         mesaService.criarMesa(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

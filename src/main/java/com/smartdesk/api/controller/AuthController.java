@@ -3,6 +3,7 @@ package com.smartdesk.api.controller;
 import com.smartdesk.api.DTOs.request.CriarUsuarioRequestDTO;
 import com.smartdesk.api.DTOs.request.LoginRequestDTO;
 import com.smartdesk.api.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastrarUsuario(@RequestBody CriarUsuarioRequestDTO dto){
+    public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid CriarUsuarioRequestDTO dto){
         authService.cadastrarUsuario(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUsuario(@RequestBody LoginRequestDTO dto){
+    public ResponseEntity<?> loginUsuario(@RequestBody @Valid LoginRequestDTO dto){
         return ResponseEntity.ok(authService.loginUsuario(dto));
     }
 }

@@ -3,6 +3,7 @@ package com.smartdesk.api.controller;
 import com.smartdesk.api.DTOs.request.AtualizarReservaRequestDTO;
 import com.smartdesk.api.DTOs.request.CriarReservaRequestDTO;
 import com.smartdesk.api.service.ReservaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ReservaController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> criarReserva(@RequestBody CriarReservaRequestDTO dto) {
+    public ResponseEntity<?> criarReserva(@RequestBody @Valid CriarReservaRequestDTO dto) {
         reservaService.criarReserva(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -37,7 +38,7 @@ public class ReservaController {
 
     @PutMapping("/atualizarReserva")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> atualizarReserva(@RequestBody AtualizarReservaRequestDTO dto){
+    public ResponseEntity<?> atualizarReserva(@RequestBody @Valid AtualizarReservaRequestDTO dto){
         reservaService.atualizarHorarioReserva(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
