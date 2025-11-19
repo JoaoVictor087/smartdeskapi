@@ -8,6 +8,8 @@ import com.smartdesk.api.repository.MesaRepository;
 import com.smartdesk.api.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,19 +41,8 @@ public class MesaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Mesa> getMesasDisponiveis(LocalDateTime dataInicio, LocalDateTime dataFim) {
-
-        List<Mesa> todasMesasAtivas = getMesasComStatusDisponivel();
-
-        List<Long> idsMesasOcupadas = reservaRepository.findMesasOcupadas(dataInicio, dataFim);
-
-        return todasMesasAtivas.stream()
-                .filter(mesa -> !idsMesasOcupadas.contains(mesa.getId()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Mesa> getMesasComStatusDisponivel() {
-        return mesaRepository.findByStatusMesa(StatusMesa.DISPONIVEL);
+    public Page<Mesa> getMesasDisponiveis(LocalDateTime dataInicio, LocalDateTime dataFim, Pageable pageable) {
+        return mesaRepository.findMesasDisponiveis(dataInicio, dataFim, pageable);
     }
 
 }

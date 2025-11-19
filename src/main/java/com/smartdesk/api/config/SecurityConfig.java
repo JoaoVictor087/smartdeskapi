@@ -41,7 +41,10 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/error"
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**",
+                                "/swagger-ui/index.html"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST,"mesas").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"reservas").hasRole("USER")

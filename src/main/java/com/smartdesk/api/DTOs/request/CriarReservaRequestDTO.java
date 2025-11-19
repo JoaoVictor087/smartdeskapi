@@ -7,14 +7,11 @@ import java.time.LocalDateTime;
 
 public record CriarReservaRequestDTO(
         @NotNull
-        @NotBlank
         Long idMesa,
 
         @NotNull
-        @NotBlank
         LocalDateTime dataInicio,
 
         @NotNull
-        @NotBlank
         LocalDateTime dataFim
 ) {}

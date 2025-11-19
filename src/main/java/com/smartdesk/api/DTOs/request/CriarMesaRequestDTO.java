@@ -12,7 +12,5 @@ public record CriarMesaRequestDTO(
         @NotBlank
         String localizacao,
 
-        @NotNull
-        @NotBlank
         int capacidadeMesa
 ) {}

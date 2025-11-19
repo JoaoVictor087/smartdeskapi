@@ -5,6 +5,9 @@ import com.smartdesk.api.entity.Mesa;
 import com.smartdesk.api.service.MesaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +33,12 @@ public class MesaController {
 
     @GetMapping("/disponiveis")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Mesa>> getMesasDisponiveis(
+    public ResponseEntity<Page<Mesa>> getMesasDisponiveis(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim,
+            @PageableDefault(size = 10, sort = "nomeMesa") Pageable pageable
     ) {
-        List<Mesa> mesas = mesaService.getMesasDisponiveis(dataInicio, dataFim);
+        Page<Mesa> mesas = mesaService.getMesasDisponiveis(dataInicio, dataFim, pageable);
         return ResponseEntity.ok(mesas);
     }
 }

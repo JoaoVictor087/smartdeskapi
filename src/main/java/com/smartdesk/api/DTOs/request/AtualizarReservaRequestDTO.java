@@ -7,15 +7,12 @@ import java.time.LocalDateTime;
 
 public record AtualizarReservaRequestDTO(
         @NotNull
-        @NotBlank
         Long idReserva,
 
         @NotNull
-        @NotBlank
         LocalDateTime novaDataInicio,
 
         @NotNull
-        @NotBlank
         LocalDateTime novaDataFim
 ) {
 }
