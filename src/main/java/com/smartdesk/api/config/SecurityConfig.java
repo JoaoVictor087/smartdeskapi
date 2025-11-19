@@ -47,7 +47,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"mesas").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"reservas").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "mesas/disponiveis").hasRole("USER")
-                        //.request matchers para role admin, criar mesa, etc.hasRoleAdmin
+                        .requestMatchers(HttpMethod.DELETE, "reservas/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "reservas/atualizarReserva").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

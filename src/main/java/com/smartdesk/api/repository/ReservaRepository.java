@@ -25,4 +25,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     );
 
     List<Reserva> findAllByUsuarioIdOrderByDataInicioDesc(Long idUsuario);
+
+    boolean existsById(Long id);
+
+    Reserva findReservaById(Long id);
+
+
 }

@@ -1,5 +1,6 @@
 package com.smartdesk.api.controller;
 
+import com.smartdesk.api.DTOs.request.AtualizarReservaRequestDTO;
 import com.smartdesk.api.DTOs.request.CriarReservaRequestDTO;
 import com.smartdesk.api.service.ReservaService;
 import lombok.RequiredArgsConstructor;
@@ -26,4 +27,20 @@ public class ReservaController {
     public ResponseEntity<?> minhasReservas() {
         return ResponseEntity.ok(reservaService.findReservasById());
     }
+
+    @DeleteMapping("/{id_reserva}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?>deletarReserva(@PathVariable Long id_reserva){
+        reservaService.deletarReserva(id_reserva);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/atualizarReserva")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> atualizarReserva(@RequestBody AtualizarReservaRequestDTO dto){
+        reservaService.atualizarHorarioReserva(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.smartdesk.api.service;
 
+import com.smartdesk.api.DTOs.request.AtualizarReservaRequestDTO;
 import com.smartdesk.api.DTOs.request.CriarReservaRequestDTO;
 import com.smartdesk.api.entity.Mesa;
 import com.smartdesk.api.entity.Reserva;
@@ -26,7 +27,6 @@ public class ReservaService {
 
     @Transactional
     public void criarReserva(CriarReservaRequestDTO dto) {
-
         Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Mesa mesa = mesaRepository.findById(dto.idMesa())
@@ -54,6 +54,34 @@ public class ReservaService {
         reservaRepository.save(novaReserva);
     }
 
+    @Transactional(readOnly = true)
+    public List<Reserva> findReservasById() {
+        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return reservaRepository.findAllByUsuarioIdOrderByDataInicioDesc(usuarioLogado.getId());
+    }
+
+    @Transactional
+    public void deletarReserva(Long id){
+        if(!reservaRepository.existsById(id)){
+            throw new ValidacaoException("Reserva não existe");
+        }
+        reservaRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Reserva atualizarHorarioReserva(AtualizarReservaRequestDTO dto){
+        if(!reservaRepository.existsById(dto.idReserva())){
+            throw new ValidacaoException("Reserva não existe");
+        }
+        validarDatas(dto.novaDataInicio(),dto.novaDataFim());
+        Reserva reserva = reservaRepository.findReservaById(dto.idReserva());
+
+        reserva.setDataInicio(dto.novaDataInicio());
+        reserva.setDataFim(dto.novaDataFim());
+        reservaRepository.save(reserva);
+        return reserva;
+    }
+
     private void validarDatas(LocalDateTime inicio, LocalDateTime fim) {
         if (inicio.isBefore(LocalDateTime.now())) {
             throw new ValidacaoException("A data de início não pode ser no passado.");
@@ -61,11 +89,5 @@ public class ReservaService {
         if (inicio.isAfter(fim) || inicio.isEqual(fim)) {
             throw new ValidacaoException("A data de início deve ser anterior à data de fim.");
         }
-    }
-
-    @Transactional(readOnly = true)
-    public List<Reserva> findReservasById() {
-        Usuario usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return reservaRepository.findAllByUsuarioIdOrderByDataInicioDesc(usuarioLogado.getId());
     }
 }
