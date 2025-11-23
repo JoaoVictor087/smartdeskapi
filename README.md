@@ -37,4 +37,4 @@ JWT_SECRET=SENHAJWT
 
 Video Demonstração do projeto
 
-[Vídeo de Demonstração da Sprint 2](https://www.youtube.com/watch?v=cfaMYLa74yI)
+[Vídeo de Demonstração](https://www.youtube.com/watch?v=cfaMYLa74yI)
